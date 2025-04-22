@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pluginspirem", "pluginspirem\pluginspirem.csproj", "{D7A15364-82F9-42E1-A592-EBE8017493A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WixBuild", "..\WixBuild\WixBuild\WixBuild.csproj", "{FEFB29FD-A48B-4B7A-B087-973AB34FA0BA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Build|Any CPU = Build|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D7A15364-82F9-42E1-A592-EBE8017493A0}.Build|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7A15364-82F9-42E1-A592-EBE8017493A0}.Build|Any CPU.Build.0 = Debug|Any CPU
+		{D7A15364-82F9-42E1-A592-EBE8017493A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7A15364-82F9-42E1-A592-EBE8017493A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7A15364-82F9-42E1-A592-EBE8017493A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7A15364-82F9-42E1-A592-EBE8017493A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEFB29FD-A48B-4B7A-B087-973AB34FA0BA}.Build|Any CPU.ActiveCfg = Build|Any CPU
+		{FEFB29FD-A48B-4B7A-B087-973AB34FA0BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEFB29FD-A48B-4B7A-B087-973AB34FA0BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEFB29FD-A48B-4B7A-B087-973AB34FA0BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEFB29FD-A48B-4B7A-B087-973AB34FA0BA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {198042E1-D610-4C2D-88DC-15E5F60E3F7D}
+	EndGlobalSection
+EndGlobal
