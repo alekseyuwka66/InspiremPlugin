@@ -22,12 +22,21 @@ namespace LightFixtureAnnotation
 
         private static List<Element> GetFixtures(SpatialElement selectedSpace, Document doc)
         {
+            Solid roomSolid = null;
             View activeView = doc.ActiveView;
 
-            SpatialElementGeometryCalculator calculator = new SpatialElementGeometryCalculator(doc);
-            SpatialElementGeometryResults results = calculator.CalculateSpatialElementGeometry(selectedSpace);
+            try
+            {
+                SpatialElementGeometryCalculator calculator = new SpatialElementGeometryCalculator(doc);
+                SpatialElementGeometryResults results = calculator.CalculateSpatialElementGeometry(selectedSpace);
 
-            Solid roomSolid = results.GetGeometry() ?? throw new InvalidOperationException("Не удалось получить геометрию помещения.");
+                roomSolid = results.GetGeometry();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex = new Exception($"Не удалось получить геометрию помещения. ElementId - {selectedSpace.Id}");
+            }
 
             FilteredElementCollector collector = new FilteredElementCollector(doc, activeView.Id)
                 .OfCategory(BuiltInCategory.OST_LightingFixtures)
@@ -107,21 +116,30 @@ namespace LightFixtureAnnotation
                     .FirstElement() as TextNoteType;
 
                 lightFixtures
-                    .GroupBy(f => f.Name)
-                    .OrderBy(g => g.Key)
+                    .GroupBy(f => new {
+                        FamilyName = string.IsNullOrEmpty(f.Name) ? "Светильник" : f.Name,
+                        TypeName = (f as FamilyInstance)?.Symbol.Name ?? "Без типоразмера",
+                        Height = GetFixtureHeight(f),
+                        Power = GetFixturePower(f)
+                    })
+                    .OrderBy(g => g.Key.FamilyName)
+                    .ThenBy(g => g.Key.TypeName)
+                    .ThenBy(g => g.Key.Height)
+                    .ThenBy(g => g.Key.Power)
                     .Select(g => new
                     {
                         Count = g.Count(),
-                        Name = string.IsNullOrEmpty(g.Key) ? "Светильник" : g.Key,
-                        Height = GetFixtureHeight(g.First()),
-                        Power = GetFixturePower(g.First())
+                        g.Key.FamilyName,
+                        g.Key.TypeName,
+                        g.Key.Height,
+                        g.Key.Power
                     })
                     .ToList()
                     .ForEach(fixture =>
                     {
                         var sign = fixture.Height >= 0 ? "+" : "-";
                         var insertionPoint = GetInsertionPoint(selectedSpace, offsetY: currentYOffset);
-                        var annotationText = $"{fixture.Count} - {fixture.Name} - {fixture.Power}\n{sign}{fixture.Height} мм";
+                        var annotationText = $"{fixture.Count} - {fixture.TypeName} - {fixture.Power}\n{sign}{Math.Abs(fixture.Height)} мм";
                         var textNote = CreateTextNote(doc, insertionPoint, annotationText);
                         textNotes.Add(textNote);
 

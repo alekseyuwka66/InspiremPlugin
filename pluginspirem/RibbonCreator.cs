@@ -23,15 +23,18 @@ namespace Inspirem
                 application.CreateRibbonTab(tabName);
 
                 // Create panel on the tab
-                RibbonPanel panel = application.CreateRibbonPanel(tabName, "Аннотации светильников");
+                RibbonPanel panel = application.CreateRibbonPanel(tabName, "Светильники");
 
                 // Create a pull-down button to group related commands
                 PulldownButtonData pulldownData = new PulldownButtonData(
                     "LightFixtureTools",
-                    "Аннотации светильников");
+                    "Аннотации");
 
                 PulldownButton pulldownButton = panel.AddItem(pulldownData) as PulldownButton;
                 pulldownButton.ToolTip = "Инструменты для аннотирования светильников";
+                
+                // Add image to the pulldown button
+                SetButtonImage(pulldownButton, "LightIcon.png");
 
                 // Add commands to the pull-down button
                 AddPushButton(pulldownButton,
@@ -96,57 +99,15 @@ namespace Inspirem
                 // Use default image if icon loading fails
             }
 
-            pulldownButton.AddPushButton(buttonData);
+            var button = pulldownButton.AddPushButton(buttonData);
         }
 
-        private static void AddLightFixtureAnnotationButton(RibbonPanel panel)
-        {
-            var buttonData = new PushButtonData(
-                "LightFixtureAnnotation",
-                "Аннотация\nсветильников",
-                thisAssemblyPath,
-                "LightFixtureAnnotation.LightFixtureAnnotationCommand");
-
-            buttonData.ToolTip = "Создает аннотацию светильников в выбранном помещении";
-            buttonData.LongDescription = "Эта команда позволяет выбрать помещение и автоматически создать аннотацию, " +
-                                       "содержащую количество и типы светильников в этом помещении.";
-
-            SetButtonImage(buttonData, "LightIcon.png");
-
-            panel.AddItem(buttonData);
-        }
-
-        private static void AddAllLightFixtureAnnotationButton(RibbonPanel panel)
-        {
-            var buttonData = new PushButtonData(
-                "AllLightFixtureAnnotation",
-                "Аннотация\nвсех светильников",
-                thisAssemblyPath,
-                "LightFixtureAnnotation.AllLightFixtureAnnotationCommand");
-
-            buttonData.ToolTip = "Создает аннотации светильников для всех помещений";
-            buttonData.LongDescription = "Автоматически создает аннотации для всех помещений в проекте.";
-
-            SetButtonImage(buttonData, "AllLightsIcon.png");
-
-            panel.AddItem(buttonData);
-        }
-
-        private static void SetButtonImage(PushButtonData buttonData, string iconName)
+        private static void SetButtonImage(PulldownButton button, string iconName)
         {
             try
             {
-                string iconPath = Path.Combine(Path.GetDirectoryName(thisAssemblyPath), "Resources", iconName);
-                if (File.Exists(iconPath))
-                {
-                    buttonData.LargeImage = new BitmapImage(new Uri(iconPath));
-                }
-                else
-                {
-                    // Try to load from embedded resources
-                    Uri uri = new Uri($"pack://application:,,,/{Assembly.GetExecutingAssembly().GetName().Name};component/Resources/{iconName}");
-                    buttonData.LargeImage = new BitmapImage(uri);
-                }
+                Uri uri = new Uri($"pack://application:,,,/pluginspirem;component/Icons/{iconName}");
+                button.LargeImage = new BitmapImage(uri);
             }
             catch
             {

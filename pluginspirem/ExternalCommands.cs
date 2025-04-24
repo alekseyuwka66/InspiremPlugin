@@ -57,13 +57,13 @@ namespace Inspirem
             return Result.Succeeded;
         }
     }
-    public class CreateLightingDimensionsCommand : IExternalCommand
-    {
-        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
-        {
+    //public class CreateLightingDimensionsCommand : IExternalCommand
+    //{
+    //    public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+    //    {
 
-            return Result.Succeeded;
-        }
-    }
+    //        return Result.Succeeded;
+    //    }
+    //}
 
 }
