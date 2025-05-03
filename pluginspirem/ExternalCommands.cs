@@ -57,13 +57,34 @@ namespace Inspirem
             return Result.Succeeded;
         }
     }
-    //public class CreateLightingDimensionsCommand : IExternalCommand
-    //{
-    //    public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
-    //    {
+    [Transaction(TransactionMode.Manual)]
+       public class LightFixtureDimensionsCommand : IExternalCommand
+    {
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
 
-    //        return Result.Succeeded;
-    //    }
-    //}
+            UIApplication uiApp = commandData.Application;
+            UIDocument uiDoc = uiApp.ActiveUIDocument;
+            Document doc = uiDoc.Document;
+
+            while (true)
+            {
+                try
+                {
+                    Reference spaceRef = uiDoc.Selection.PickObject(
+                        ObjectType.Element,
+                        new SpaceSelectionFilter(),
+                        "Выберите помещение/пространство (ESC для выхода)");
+
+                    SpatialElement selectedSpace = doc.GetElement(spaceRef) as SpatialElement;
+                    LightFixtureDimensions.CreateDimensions(selectedSpace, doc, uiDoc);
+                }
+                catch (Autodesk.Revit.Exceptions.OperationCanceledException)
+                {
+                    return Result.Succeeded;
+                }
+            }
+        }
+    }
 
 }

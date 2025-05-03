@@ -56,8 +56,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LightFixture.cs" />
     <Compile Include="LightFixtureAnnotation.cs" />
-    <Compile Include="LightingDimensions.cs" />
+    <Compile Include="LightFixtureDimensions.cs" />
     <Compile Include="OnStartSettings.cs" />
     <Compile Include="RibbonCreator.cs" />
     <Compile Include="ExternalCommands.cs" />
