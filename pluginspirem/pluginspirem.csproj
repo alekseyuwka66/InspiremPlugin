@@ -68,7 +68,10 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\LightIcon.png" />
+    <Resource Include="Icons\Annotation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Creation.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
