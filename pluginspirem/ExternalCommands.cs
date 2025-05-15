@@ -77,7 +77,7 @@ namespace Inspirem
                         "Выберите помещение/пространство (ESC для выхода)");
 
                     SpatialElement selectedSpace = doc.GetElement(spaceRef) as SpatialElement;
-                    LightFixtureDimensions.CreateDimensions(selectedSpace, doc, uiDoc);
+                    LightFixtureDimensions.CreateDimensions(selectedSpace, doc);
                 }
                 catch (Autodesk.Revit.Exceptions.OperationCanceledException)
                 {
