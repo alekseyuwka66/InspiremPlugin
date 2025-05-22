@@ -156,7 +156,7 @@ namespace LightFixtureAnnotation
             Parameter elevationParam = fixture.get_Parameter(BuiltInParameter.INSTANCE_ELEVATION_PARAM);
             if (elevationParam != null && elevationParam.HasValue)
             {
-                return UnitUtils.ConvertFromInternalUnits(elevationParam.AsDouble(), UnitTypeId.Millimeters);
+                return Math.Round(UnitUtils.ConvertFromInternalUnits(elevationParam.AsDouble(), UnitTypeId.Millimeters));
             }
             return 0;
         }
@@ -170,11 +170,25 @@ namespace LightFixtureAnnotation
                     Parameter powerParam = type.LookupParameter("ADSK_Номинальная мощность");
                     if (powerParam != null && powerParam.HasValue)
                     {
-                        return powerParam.AsValueString();
+                        double powerValue = powerParam.AsDouble();
+
+                        ForgeTypeId unitType = powerParam.GetUnitTypeId();
+
+                        double powerInWatts;
+                        if (unitType == UnitTypeId.Kilowatts)
+                        {
+                            powerInWatts = UnitUtils.ConvertFromInternalUnits(powerValue, UnitTypeId.Kilowatts) * 1000;
+                        }
+                        else
+                        {
+                            powerInWatts = UnitUtils.ConvertFromInternalUnits(powerValue, UnitTypeId.Watts);
+                        }
+
+                        return Math.Round(powerInWatts).ToString();
                     }
                 }
             }
-            return "0 Вт";
+            return "0";
         }
         private static TextNote CreateTextNote(Document doc, XYZ position, string text)
         {
